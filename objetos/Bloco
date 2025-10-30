@@ -1,0 +1,43 @@
+package objetos;
+
+import java.awt.image.BufferedImage;
+
+public class Bloco {
+
+    private BufferedImage[] sprite;
+    private int id, tipoBloco;
+
+    public Bloco(BufferedImage sprite, int id, int tipoBloco) {
+        this.sprite = new BufferedImage[1];
+        this.sprite[0] = sprite;
+        this.id = id;
+        this.tipoBloco = tipoBloco;
+    }
+
+    public Bloco(BufferedImage[] sprite, int id, int tipoBloco) {
+        this.sprite = sprite;
+        this.id = id;
+        this.tipoBloco = tipoBloco;
+    }
+
+    public int getTipoBloco() {
+        return tipoBloco;
+    }
+
+    public BufferedImage getSprite(int indiceAnimacao) {
+        return sprite[indiceAnimacao];
+    }
+
+    public BufferedImage getSprite() {
+        return sprite[0];
+    }
+
+    public boolean eAnimacao() {
+        return sprite.length > 1;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+}
