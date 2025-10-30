@@ -1,0 +1,128 @@
+package gerenciadores;
+
+import static ajuda.Constantes.Blocos.*;
+
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+import ajuda.AjusteImg;
+import ajuda.CarregarSalvar;
+import objetos.Bloco;
+
+public class GerenciadorBlocos {
+
+    public Bloco GRAMA, AGUA, ESTRADA_ESQ_DIR, ESTRADA_CIMA_BAIXO, ESTRADA_BAIXO_PARA_DIR, ESTRADA_ESQ_PARA_BAIXO, ESTRADA_ESQ_PARA_CIMA, ESTRADA_CIMA_PARA_DIR, CANTO_AGUA_INF_ESQ, CANTO_AGUA_SUP_ESQ, CANTO_AGUA_SUP_DIR, CANTO_AGUA_INF_DIR, AGUA_CIMA, AGUA_DIREITA, AGUA_BAIXO,
+            AGUA_ESQUERDA, ILHA_SUP_ESQ, ILHA_SUP_DIR, ILHA_INF_DIR, ILHA_INF_ESQ;
+
+    private BufferedImage atlas;
+    public ArrayList<Bloco> blocos = new ArrayList<>();
+
+    public ArrayList<Bloco> estradasR = new ArrayList<>();
+    public ArrayList<Bloco> estradasC = new ArrayList<>();
+    public ArrayList<Bloco> cantos = new ArrayList<>();
+    public ArrayList<Bloco> praias = new ArrayList<>();
+    public ArrayList<Bloco> ilhas = new ArrayList<>();
+
+    public GerenciadorBlocos() {
+
+        carregarAtlas();
+        criarBlocos();
+
+    }
+
+    private void criarBlocos() {
+
+        int id = 0;
+
+        blocos.add(GRAMA = new Bloco(getSprite(9, 0), id++, BLOCO_GRAMA));
+        blocos.add(AGUA = new Bloco(getSpritesAnimados(0, 0), id++, BLOCO_AGUA));
+
+        estradasR.add(ESTRADA_ESQ_DIR = new Bloco(getSprite(8, 0), id++, BLOCO_ESTRADA));
+        estradasR.add(ESTRADA_CIMA_BAIXO = new Bloco(AjusteImg.getImgRotacionada(getSprite(8, 0), 90), id++, BLOCO_ESTRADA));
+
+        estradasC.add(ESTRADA_BAIXO_PARA_DIR = new Bloco(getSprite(7, 0), id++, BLOCO_ESTRADA));
+        estradasC.add(ESTRADA_ESQ_PARA_BAIXO = new Bloco(AjusteImg.getImgRotacionada(getSprite(7, 0), 90), id++, BLOCO_ESTRADA));
+        estradasC.add(ESTRADA_ESQ_PARA_CIMA = new Bloco(AjusteImg.getImgRotacionada(getSprite(7, 0), 180), id++, BLOCO_ESTRADA));
+        estradasC.add(ESTRADA_CIMA_PARA_DIR = new Bloco(AjusteImg.getImgRotacionada(getSprite(7, 0), 270), id++, BLOCO_ESTRADA));
+
+        cantos.add(CANTO_AGUA_INF_ESQ = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(5, 0), 0), id++, BLOCO_AGUA));
+        cantos.add(CANTO_AGUA_SUP_ESQ = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(5, 0), 90), id++, BLOCO_AGUA));
+        cantos.add(CANTO_AGUA_SUP_DIR = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(5, 0), 180), id++, BLOCO_AGUA));
+        cantos.add(CANTO_AGUA_INF_DIR = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(5, 0), 270), id++, BLOCO_AGUA));
+
+        praias.add(AGUA_CIMA = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(6, 0), 0), id++, BLOCO_AGUA));
+        praias.add(AGUA_DIREITA = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(6, 0), 90), id++, BLOCO_AGUA));
+        praias.add(AGUA_BAIXO = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(6, 0), 180), id++, BLOCO_AGUA));
+        praias.add(AGUA_ESQUERDA = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(6, 0), 270), id++, BLOCO_AGUA));
+
+        ilhas.add(ILHA_SUP_ESQ = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(4, 0), 0), id++, BLOCO_AGUA));
+        ilhas.add(ILHA_SUP_DIR = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(4, 0), 90), id++, BLOCO_AGUA));
+        ilhas.add(ILHA_INF_DIR = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(4, 0), 180), id++, BLOCO_AGUA));
+        ilhas.add(ILHA_INF_ESQ = new Bloco(AjusteImg.getImgMontadaRotacionada(getSpritesAnimados(0, 0), getSprite(4, 0), 270), id++, BLOCO_AGUA));
+
+        blocos.addAll(estradasR);
+        blocos.addAll(estradasC);
+        blocos.addAll(cantos);
+        blocos.addAll(praias);
+        blocos.addAll(ilhas);
+    }
+
+    private BufferedImage[] getImgs(int primeiroX, int primeiroY, int segundoX, int segundoY) {
+        return new BufferedImage[] { getSprite(primeiroX, primeiroY), getSprite(segundoX, segundoY) };
+    }
+
+    private void carregarAtlas() {
+        atlas = CarregarSalvar.getAtlasSprites();
+    }
+
+    public Bloco getBloco(int id) {
+        return blocos.get(id);
+    }
+
+    public BufferedImage getSprite(int id) {
+        return blocos.get(id).getSprite();
+    }
+
+    public BufferedImage getSpriteAnimado(int id, int indiceAnimacao) {
+        return blocos.get(id).getSprite(indiceAnimacao);
+    }
+
+    private BufferedImage[] getSpritesAnimados(int coordX, int coordY) {
+        BufferedImage[] arr = new BufferedImage[4];
+        for (int i = 0; i < 4; i++) {
+            arr[i] = getSprite(coordX + i, coordY);
+        }
+
+        return arr;
+
+    }
+
+    private BufferedImage getSprite(int coordX, int coordY) {
+        return atlas.getSubimage(coordX * 32, coordY * 32, 32, 32);
+    }
+
+    public boolean eAnimacaoSprite(int spriteID) {
+        return blocos.get(spriteID).eAnimacao();
+    }
+
+    public ArrayList<Bloco> getEstradasR() {
+        return estradasR;
+    }
+
+    public ArrayList<Bloco> getEstradasC() {
+        return estradasC;
+    }
+
+    public ArrayList<Bloco> getCantos() {
+        return cantos;
+    }
+
+    public ArrayList<Bloco> getPraias() {
+        return praias;
+    }
+
+    public ArrayList<Bloco> getIlhas() {
+        return ilhas;
+    }
+
+}
