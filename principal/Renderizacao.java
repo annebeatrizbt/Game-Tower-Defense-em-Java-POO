@@ -4,39 +4,37 @@ import java.awt.Graphics;
 
 public class Renderizacao {
 
-    private Jogo jogo;
+	private Jogo jogo;
 
-    public Renderizacao(Jogo jogo) {
-        this.jogo = jogo;
+	public Renderizacao(Jogo jogo) {
+		this.jogo = jogo;
 
-    }
+	}
 
-    public void renderizar(Graphics g) {
+	public void renderizar(Graphics g) {
 
-        switch (EstadosJogo.estadoJogo) {
+		switch (EstadosJogo.estadoJogo) {
 
-        case MENU:
-            jogo.getMenu().renderizar(g);
+		case MENU:
+			jogo.getMenu().renderizar(g);
+			break;
+		case JOGANDO:
+			jogo.getJogando().renderizar(g);
+			break;
+		case CONFIGURACOES:
+			jogo.getConfiguracoes().renderizar(g);
+			break;
+		case EDITAR:
+			jogo.getEditor().renderizar(g);
+			break;
+		case FIM_DE_JOGO:
+			jogo.getFimDeJogo().renderizar(g);
+			break;
+		default:
+			break;
 
-            break;
-        case JOGANDO:
+		}
 
-            jogo.getJogando().renderizar(g);
-
-            break;
-        case CONFIGURACOES:
-
-            jogo.getConfiguracoes().renderizar(g);
-
-            break;
-        case EDITAR:
-            jogo.getEditor().renderizar(g);
-            break;
-        default:
-            break;
-
-        }
-
-    }
+	}
 
 }
