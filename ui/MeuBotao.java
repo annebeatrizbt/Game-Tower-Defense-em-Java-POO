@@ -6,103 +6,102 @@ import java.awt.Rectangle;
 
 public class MeuBotao {
 
-    public int x, y, largura, altura, id;
-    private String texto;
-    private Rectangle limites;
-    private boolean mouseSobre, mousePressionado;
+	public int x, y, largura, altura, id;
+	private String texto;
+	private Rectangle limites;
+	private boolean mouseSobre, mousePressionado;
 
-    // Para botões normais
-    public MeuBotao(String texto, int x, int y, int largura, int altura) {
-        this.texto = texto;
-        this.x = x;
-        this.y = y;
-        this.largura = largura;
-        this.altura = altura;
-        this.id = -1;
+	// Para botões normais
+	public MeuBotao(String texto, int x, int y, int largura, int altura) {
+		this.texto = texto;
+		this.x = x;
+		this.y = y;
+		this.largura = largura;
+		this.altura = altura;
+		this.id = -1;
 
-        iniciarLimites();
-    }
+		iniciarLimites();
+	}
 
-    // Para botões de bloco
-    public MeuBotao(String texto, int x, int y, int largura, int altura, int id) {
-        this.texto = texto;
-        this.x = x;
-        this.y = y;
-        this.largura = largura;
-        this.altura = altura;
-        this.id = id;
+	// Para botões de bloco
+	public MeuBotao(String texto, int x, int y, int largura, int altura, int id) {
+		this.texto = texto;
+		this.x = x;
+		this.y = y;
+		this.largura = largura;
+		this.altura = altura;
+		this.id = id;
 
-        iniciarLimites();
-    }
+		iniciarLimites();
+	}
 
-    private void iniciarLimites() {
-        this.limites = new Rectangle(x, y, largura, altura);
-    }
+	private void iniciarLimites() {
+		this.limites = new Rectangle(x, y, largura, altura);
+	}
 
-    public void desenhar(Graphics g) {
-        // Corpo
-        desenharCorpo(g);
+	public void desenhar(Graphics g) {
+		desenharCorpo(g);
+		desenharBorda(g);
+		desenharTexto(g);
+	}
 
-        // Borda
-        desenharBorda(g);
+	private void desenharBorda(Graphics g) {
 
-        // Texto
-        desenharTexto(g);
-    }
+		g.setColor(Color.black);
+		g.drawRect(x, y, largura, altura);
+		if (mousePressionado) {
+			g.drawRect(x + 1, y + 1, largura - 2, altura - 2);
+			g.drawRect(x + 2, y + 2, largura - 4, altura - 4);
+		}
 
-    private void desenharBorda(Graphics g) {
+	}
 
-        g.setColor(Color.black);
-        g.drawRect(x, y, largura, altura);
-        if (mousePressionado) {
-            g.drawRect(x + 1, y + 1, largura - 2, altura - 2);
-            g.drawRect(x + 2, y + 2, largura - 4, altura - 4);
-        }
+	private void desenharCorpo(Graphics g) {
+		if (mouseSobre)
+			g.setColor(Color.gray);
+		else
+			g.setColor(Color.WHITE);
+		g.fillRect(x, y, largura, altura);
 
-    }
+	}
 
-    private void desenharCorpo(Graphics g) {
-        if (mouseSobre)
-            g.setColor(Color.gray);
-        else
-            g.setColor(Color.WHITE);
-        g.fillRect(x, y, largura, altura);
+	private void desenharTexto(Graphics g) {
+		int w = g.getFontMetrics().stringWidth(texto);
+		int h = g.getFontMetrics().getHeight();
+		g.drawString(texto, x - w / 2 + largura / 2, y + h / 2 + altura / 2);
 
-    }
+	}
 
-    private void desenharTexto(Graphics g) {
-        int w = g.getFontMetrics().stringWidth(texto);
-        int h = g.getFontMetrics().getHeight();
-        g.drawString(texto, x - w / 2 + largura / 2, y + h / 2 + altura / 2);
+	public void resetarBooleanos() {
+		this.mouseSobre = false;
+		this.mousePressionado = false;
+	}
 
-    }
+	public void setText(String texto) {
+		this.texto = texto;
+	}
 
-    public void resetarBooleanos() {
-        this.mouseSobre = false;
-        this.mousePressionado = false;
-    }
+	public void setMousePressionado(boolean mousePressionado) {
+		this.mousePressionado = mousePressionado;
+	}
 
-    public void setMousePressionado(boolean mousePressionado) {
-        this.mousePressionado = mousePressionado;
-    }
+	public void setMouseSobre(boolean mouseSobre) {
+		this.mouseSobre = mouseSobre;
+	}
 
-    public void setMouseSobre(boolean mouseSobre) {
-        this.mouseSobre = mouseSobre;
-    }
+	public boolean getMouseSobre() {
+		return mouseSobre;
+	}
 
-    public boolean isMouseSobre() {
-        return mouseSobre;
-    }
+	public boolean getMousePressionado() {
+		return mousePressionado;
+	}
 
-    public boolean isMousePressionado() {
-        return mousePressionado;
-    }
+	public Rectangle getLimites() {
+		return limites;
+	}
 
-    public Rectangle getLimites() {
-        return limites;
-    }
-
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 }
